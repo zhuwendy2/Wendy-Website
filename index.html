@@ -7,35 +7,31 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Welcome to My Website!</h1>
-    <h3>A bit about me</h3>
-    <button id="navigateButton">Go to another page</button>
 
-    <script>
-        const navigateButton = document.getElementById('navigateButton');
-        navigateButton.addEventListener('click', function() {
-            window.location.href = "test.html";
-        });
-    </script>
+    <header>
+        <h1>Welcome to My Website!</h1>
+        <nav>
+            <a href="index.html">Home</a> |
+            <a href="test.html">Photography</a>
+        </nav>
+    </header>
 
     <main>
-        <p>Hello! My name is <strong>Wendy Zhu</strong>, and I’m a student at <strong>Northeastern University</strong> studying Marketing and Accounting with a minor in Data Science.</p>
+        <section>
+            <h2>About Me</h2>
+            <img src="IMG_2471.JPG" alt="Wendy Zhu" class="profile-img" width="400">
 
-        <p>My academic interests lie at the intersection of creativity and analytics. I enjoy exploring how data can inform better business and marketing decisions, while still appreciating the human and creative side of storytelling.</p>
+            <p>Hello! My name is <strong>Wendy Zhu</strong>, and I’m a student at <strong>Northeastern University</strong> studying Marketing and Accounting with a minor in Data Science. My academic interests lie at the intersection of creativity and analytics. I enjoy exploring how data can inform better business and marketing decisions, while still appreciating the human and creative side of storytelling.</p>
 
-        <p>Over the years, I’ve grown passionate about understanding consumer behavior, visual communication, and how insights from data can shape effective marketing strategies. In my coursework, I’ve worked on projects involving data visualization, consumer analysis, and marketing performance metrics — experiences that helped me see how accounting and data science work together in modern business environments.</p>
+            <p>Over the years, I’ve grown passionate about understanding consumer behavior, visual communication, and how insights from data can shape effective marketing strategies. In my coursework, I’ve worked on projects involving data visualization, consumer analysis, and marketing performance metrics—experiences that helped me see how accounting and data science work together in modern business environments.</p>
 
-        <p>Beyond academics, I’m a <strong>freelance photographer</strong> who loves capturing weddings, powerlifting portraits, and moments that tell authentic stories. Photography allows me to express the artistic side that balances my analytical mindset. Feel free to explore my photography page to see some of my favorite shots and learn about what inspires my work!</p>
-
-        <p>📸 Check out my work and connect with me here:</p>
-
-        <a href="https://www.linkedin.com/in/wendy-zhu-65044520a/" target="_blank">LinkedIn</a>
-
-        <br><br>
-
-        <img src="IMG_2471.JPG" alt="Wendy Zhu Photography" width="500">
+            <p>Beyond academics, I’m a <strong>freelance photographer</strong> who loves capturing weddings, portraits, and moments that tell authentic stories. Photography allows me to express the artistic side that balances my analytical mindset. Feel free to explore my photography page to see some of my favorite shots and learn about what inspires my work!</p>
+        </section>
     </main>
+
+    <footer>
+        <p>📧 <a href="mailto:wendy@example.com">Email Me</a> | 💼 <a href="https://www.linkedin.com/in/wendy-zhu-65044520a/" target="_blank">LinkedIn</a> | 🌐 <a href="https://github.com/yourusername" target="_blank">GitHub</a></p>
+    </footer>
 
 </body>
 </html>
-
