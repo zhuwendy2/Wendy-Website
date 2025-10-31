@@ -1,4 +1,4 @@
-/* General Page Styling */
+
 body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
     margin: 0;
@@ -96,4 +96,5 @@ footer a {
 footer a:hover {
     text-decoration: underline;
 }
+
 
