@@ -1,58 +1,99 @@
+/* General Page Styling */
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 40px;
-    background-color: #f9f9f9;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fafafa;
     color: #333;
+    line-height: 1.6;
 }
 
-/* Headings */
-h1 {
-    color: #1a4b8a;
+
+header {
+    background-color: #a0c4ff;
+    color: #fff;
+    padding: 20px 0;
     text-align: center;
 }
 
-h3, h2 {
-    color: #555;
+header h1 {
+    margin: 0;
 }
 
-/* Links */
-a {
-    color: #1a4b8a;
+nav a {
+    color: #fff;
     text-decoration: none;
+    margin: 0 10px;
+    font-weight: bold;
 }
 
-a:hover {
+nav a:hover {
     text-decoration: underline;
 }
 
-/* Image styling */
-img {
-    display: block;
-    margin: 20px auto;
-    border-radius: 8px;
+main {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 20px;
 }
 
-/* Button styling */
-button {
-    display: block;
-    margin: 20px auto;
-    background-color: #1a4b8a;
-    color: white;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 16px;
+h2 {
+    color: #4361ee;
+    border-bottom: 2px solid #4361ee;
+    padding-bottom: 5px;
 }
 
-button:hover {
-    background-color: #163a6b;
+.profile-img {
+    border-radius: 10px;
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-/* Footer styling */
-footer {
-    text-align: center;
+#contact {
+    background-color: #e9f0ff;
+    padding: 20px;
     margin-top: 40px;
-    font-size: 14px;
+    border-radius: 10px;
 }
+
+#contact h2 {
+    color: #3a0ca3;
+}
+
+#contact ul {
+    list-style: none;
+    padding: 0;
+}
+
+#contact li {
+    margin: 8px 0;
+    font-size: 1.1em;
+}
+
+#contact a {
+    color: #3a0ca3;
+    text-decoration: none;
+}
+
+#contact a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+footer {
+    background-color: #a0c4ff;
+    color: #fff;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 40px;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
