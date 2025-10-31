@@ -333,5 +333,4 @@ d3.csv("socialMedia.csv").then(function(data) {
           .attr("fill", "steelblue");
 });
 
-});
 
