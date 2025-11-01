@@ -1,11 +1,9 @@
 // Load the data
 const socialMedia = d3.csv("socialMedia.csv");
 
-// Once the data is loaded, proceed with plotting
+// Box plot
 socialMedia.then(function(dataset) {
-    dataset.forEach(function(item) {
-        item.Likes = +item.Likes;
-    });
+    dataset.forEach(d => d.Likes = +d.Likes);
 
     const margins = { top: 40, right: 30, bottom: 60, left: 70 },
           w  = 600 - margins.left - margins.right,
@@ -19,21 +17,21 @@ socialMedia.then(function(dataset) {
       .attr("transform", `translate(${margins.left},${margins.top})`);
 
     const groups = [...new Set(dataset.map(d => d.AgeGroup))];
-    const xAxisScale = d3.scaleBand()
+    const xScale = d3.scaleBand()
         .domain(groups)
         .range([0, w])
         .padding(0.4);
     
-    const yAxisScale = d3.scaleLinear()
+    const yScale = d3.scaleLinear()
         .domain([0, d3.max(dataset, d => d.Likes)])
         .range([h, 0]);
 
     chart.append("g")
       .attr("transform", `translate(0,${h})`)
-      .call(d3.axisBottom(xAxisScale));
+      .call(d3.axisBottom(xScale));
 
     chart.append("g")
-      .call(d3.axisLeft(yAxisScale));
+      .call(d3.axisLeft(yScale));
 
     chart.append("text")
       .attr("x", w / 2)
@@ -62,35 +60,35 @@ socialMedia.then(function(dataset) {
     const statsByGroup = d3.rollup(dataset, summarize, d => d.AgeGroup);
 
     statsByGroup.forEach((stats, group) => {
-        const x = xAxisScale(group);
-        const boxWidth = xAxisScale.bandwidth();
+        const x = xScale(group);
+        const boxWidth = xScale.bandwidth();
 
         chart.append("line")
           .attr("x1", x + boxWidth / 2)
           .attr("x2", x + boxWidth / 2)
-          .attr("y1", yAxisScale(stats.min))
-          .attr("y2", yAxisScale(stats.max))
+          .attr("y1", yScale(stats.min))
+          .attr("y2", yScale(stats.max))
           .attr("stroke", "#333");
 
         chart.append("rect")
           .attr("x", x)
-          .attr("y", yAxisScale(stats.q3))
+          .attr("y", yScale(stats.q3))
           .attr("width", boxWidth)
-          .attr("height", yAxisScale(stats.q1) - yAxisScale(stats.q3))
+          .attr("height", yScale(stats.q1) - yScale(stats.q3))
           .attr("stroke", "#333")
-          .attr("fill", "#f2a9a9");
+          .attr("fill", "#9370DB"); // light purple
 
         chart.append("line")
           .attr("x1", x)
           .attr("x2", x + boxWidth)
-          .attr("y1", yAxisScale(stats.median))
-          .attr("y2", yAxisScale(stats.median))
+          .attr("y1", yScale(stats.median))
+          .attr("y2", yScale(stats.median))
           .attr("stroke", "#333")
           .attr("stroke-width", 2);
     });
 });
 
-// Second chart (bar plot)
+// Bar plot
 d3.csv("socialMedia.csv").then(function(dataset) {
     dataset.forEach(d => d.Likes = +d.Likes);
 
@@ -126,31 +124,31 @@ d3.csv("socialMedia.csv").then(function(dataset) {
     const platforms = [...new Set(arrangedData.map(d => d.Platform))];
     const postTypes = [...new Set(arrangedData.map(d => d.PostType))];
 
-    const xMain = d3.scaleBand()
+    const x0 = d3.scaleBand()
       .domain(platforms)
       .range([0, w])
       .paddingInner(0.2);
 
-    const xSub = d3.scaleBand()
+    const x1 = d3.scaleBand()
       .domain(postTypes)
-      .range([0, xMain.bandwidth()])
+      .range([0, x0.bandwidth()])
       .padding(0.05);
 
-    const yAxisScale = d3.scaleLinear()
+    const y = d3.scaleLinear()
       .domain([0, d3.max(arrangedData, d => d.AvgLikes)])
       .nice()
       .range([h, 0]);
 
     const colors = d3.scaleOrdinal()
       .domain(postTypes)
-      .range(["#9370DB", "#FFB347", "#77DD77"]);    
+      .range(["#9370DB", "#FFB347", "#77DD77"]); // consistent theme
 
     chart.append("g")
       .attr("transform", `translate(0,${h})`)
-      .call(d3.axisBottom(xMain));
+      .call(d3.axisBottom(x0));
 
     chart.append("g")
-      .call(d3.axisLeft(yAxisScale));
+      .call(d3.axisLeft(y));
 
     chart.append("text")
       .attr("x", w / 2)
@@ -170,23 +168,22 @@ d3.csv("socialMedia.csv").then(function(dataset) {
       .enter()
       .append("g")
       .attr("class", "platform")
-      .attr("transform", d => `translate(${xMain(d[0])},0)`);
+      .attr("transform", d => `translate(${x0(d[0])},0)`);
 
     bars.selectAll("rect")
       .data(d => d[1])
       .enter()
       .append("rect")
-        .attr("x", d => xSub(d.PostType))
-        .attr("y", d => yAxisScale(d.AvgLikes))
-        .attr("width", xSub.bandwidth())
-        .attr("height", d => h - yAxisScale(d.AvgLikes))
+        .attr("x", d => x1(d.PostType))
+        .attr("y", d => y(d.AvgLikes))
+        .attr("width", x1.bandwidth())
+        .attr("height", d => h - y(d.AvgLikes))
         .attr("fill", d => colors(d.PostType));
 
     const legend = chart.append("g")
       .attr("transform", `translate(${w + 40}, ${40})`);
 
-    const legendItems = [...new Set(arrangedData.map(d => d.PostType))];
-    legendItems.forEach((type, i) => {
+    postTypes.forEach((type, i) => {
       legend.append("rect")
         .attr("x", 0)
         .attr("y", i * 25)
@@ -259,7 +256,7 @@ d3.csv("socialMedia.csv").then(function(dataset) {
         .attr("text-anchor", "middle")
         .text("Average Number of Likes");
 
-    const connector = d3.line()
+    const line = d3.line()
         .x(d => x(d.Date) + x.bandwidth() / 2)
         .y(d => y(d.AvgLikes))
         .curve(d3.curveNatural);
@@ -267,9 +264,9 @@ d3.csv("socialMedia.csv").then(function(dataset) {
     chart.append("path")
         .datum(arranged)
         .attr("fill", "none")
-        .attr("stroke", "#FF6347")
+        .attr("stroke", "#9370DB")
         .attr("stroke-width", 2)
-        .attr("d", connector);
+        .attr("d", line);
 
     chart.selectAll(".dot")
         .data(arranged)
@@ -278,5 +275,6 @@ d3.csv("socialMedia.csv").then(function(dataset) {
           .attr("cx", d => x(d.Date) + x.bandwidth() / 2)
           .attr("cy", d => y(d.AvgLikes))
           .attr("r", 4)
-          .attr("fill", "#FF6347");
+          .attr("fill", "#9370DB");
 });
+
